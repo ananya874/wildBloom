@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WildBloom - Handcrafted Pottery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            color: #1a365d;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5282;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1a365d;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2c5282;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            fill: #1a365d;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: #f8f9fa;
+        }
+
+        .discount-banner {
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            right: -20px;
+            background: linear-gradient(45deg, #2c5282, #1a365d);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            transform: rotate(-2deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-text {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #1a365d;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #4a5568;
+        }
+
+        .cta-button {
+            background: #2c5282;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #1a365d;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.5);
+            margin: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #1a365d;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #4a5568;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1a365d;
+        }
+
+        .product-price {
+            font-size: 16px;
+            color: #2c5282;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: transparent;
+            border: 2px solid #2c5282;
+            color: #2c5282;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #2c5282;
+            color: white;
+        }
+
+        /* Feature Section */
+        .feature-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #1a365d;
+        }
+
+        .feature-text p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #4a5568;
+        }
+
+        .feature-image {
+            flex: 1;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            background: #f8f9fa;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a365d;
+            color: #f8f9fa;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: #2c5282;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h4 {
+            color: #2c5282;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #cbd5e0;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #2c5282;
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+            color: #cbd5e0;
+        }
+
+        .copyright {
+            border-top: 1px solid #4a5568;
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .copyright p {
+            color: #cbd5e0;
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .feature-content {
+                flex-direction: column;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">WildBLOOM</a>
+            <ul class="nav-links">
+                <li><a href="#mugs">HOME</a></li>
+                <li><a href="product page all.html">ALL PRODUCTS</a></li>
+                <li><a href="nlogggg page.html">BLOGS</a></li>
+                <li><a href="blog page.html">CONTACT</a></li>
+                <li><a href="about page.html">ABOUT</a></li>
+            </ul>
+            <div class="nav-icons">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-image">
+                        <img src="pootery.jpg" alt="Handcrafted Pottery Collection">
+                        <div class="discount-banner">
+                            20% OFF SITEWIDE
+                        </div>
+                    </div>
+                    <div class="hero-text">
+                        <h1>Crafted by Nature<br>Inspired by Earth</h1>
+                        <p>Explore our collection of handcrafted ceramics where organic textures and natural forms celebrate the beauty of the world around us.</p>
+                        <a href="#products" class="cta-button">SHOP THE BESTSELLERS</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="products-section" id="products">
+            <div class="container">
+                <h2 class="section-title"><em>BACK IN STOCK</em></h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="Screenshot 2025-07-13 110909.png" alt="Dune Mug">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Checkered Totem Mug&nbsp;</div>
+                            <div class="product-price">$58 Each</div>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="Screenshot 2025-07-13 110726.png" alt="Early Summer Plate">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Wave Plate&nbsp;</div>
+                            <div class="product-price">$78 Each</div>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="IMG_2517.jpg" alt="Desert Mug">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Fruit Bowl</div>
+                            <div class="product-price">$58 Each</div>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="WhatsApp Image 2025-07-13 at 10.47.20 AM.jpeg" alt="Spice Holder">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Alea Girl&nbsp;</div>
+                            <div class="product-price">$68 Each</div>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="WhatsApp Image 2025-07-13 at 10.47.20 AM (3).jpeg" alt="Alea Mugs">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Blue &amp; White Abstract Cup&nbsp;</div>
+                            <div class="product-price">$52 Each</div>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                        <a href="New Arrivals.jpg"><img src="New Arrivals.jpg" alt="Artisan Soap Plate"></a> </div>
+                        <div class="product-info">
+                            <div class="product-name">Terracotta Mug&nbsp;</div>
+                            <div class="product-price">$46 Each</div>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+</div>
+            </div>
+        </section>
+
+        <section class="feature-section">
+            <div class="container">
+                <div class="feature-content">
+                    <div class="feature-text">
+                        <h2>Sunrise</h2>
+                        <p>Sunrise captures the warmth and serenity of the early morning light with delicate hues, refined tones and textural finishes that elevate everyday rituals and moments.</p>
+                        <a href="#sunrise" class="cta-button">DISCOVER THE SUNRISE COLLECTION</a>
+                    </div>
+                    <div class="feature-image">
+                        <img src="DINNERWARES & CROCKERY.jpg" alt="Sunrise Collection">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <!-- Empty section for spacing -->
+                </div>
+                <div class="footer-section">
+                    <h3>About Company</h3>
+                    <ul>
+                        <li><a href="#story">Our Story</a></li>
+                        <li><a href="#collaborators">Collaborators</a></li>
+                        <li><a href="#resellers">Resellers</a></li>
+                        <li><a href="#blogs">Blogs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#sales">Sales</a></li>
+                        <li><a href="#new-collection">New Collection</a></li>
+                        <li><a href="#all-collection">All Collection</a></li>
+                        <li><a href="#gifting">Gifting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="#track">Track Order</a></li>
+                        <li><a href="#refund">Refund [&] Replacement</a></li>
+                        <li><a href="#return">Return Form</a></li>
+                        <li><a href="#faqs">FAQs</a></li>
+                        <li><a href="#bulk">Bulk Order</a></li>
+                        <li><a href="#terms">Terms And Conditions</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="contact-info">
+                        <p>#106, Venkateshwara Estate, Thotadagudadahalli, Nagarihalli, Bangalore - 560 073.</p>
+                        <p>WhatsApp: +91 88617 83304</p>
+                        <p>Email: Amalficeramics@Gmail.Com</p>
+                        <p>Call Us: +91 88617 83304</p>
+                        <p>Call Us: +91 99875 90519</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Amalfiee Ceramic - All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

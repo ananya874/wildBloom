@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WildBloom - Mugs Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            color: #1a365d;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5282;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1a365d;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2c5282;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            fill: #1a365d;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .breadcrumb-nav a {
+            color: #2c5282;
+            text-decoration: none;
+        }
+
+        .breadcrumb-nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Category Hero */
+        .category-hero {
+            background: linear-gradient(135deg, rgba(44, 82, 130, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .category-hero h1 {
+            font-size: 48px;
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .category-hero p {
+            font-size: 18px;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter and Sort Bar */
+        .filter-sort-bar {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px 0;
+            margin: 30px 0;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-sort-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #1a365d;
+        }
+
+        .filter-group select {
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            color: #1a365d;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #2c5282;
+        }
+
+        .results-count {
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        /* Products Grid */
+        .products-section {
+            padding: 40px 0 80px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #4a5568;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #2c5282;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1a365d;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #2c5282;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background: #2c5282;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #1a365d;
+            transform: translateY(-2px);
+        }
+
+        .wishlist-btn {
+            width: 45px;
+            height: 45px;
+            background: transparent;
+            border: 2px solid #2c5282;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .wishlist-btn:hover {
+            background: #2c5282;
+            color: white;
+        }
+
+        .wishlist-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #2c5282;
+            transition: fill 0.3s;
+        }
+
+        .wishlist-btn:hover svg {
+            fill: white;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 50px;
+        }
+
+        .pagination button {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: #1a365d;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover {
+            border-color: #2c5282;
+            background: #2c5282;
+            color: white;
+        }
+
+        .pagination button.active {
+            background: #2c5282;
+            color: white;
+            border-color: #2c5282;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .newsletter-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .newsletter-form button {
+            background: white;
+            color: #2c5282;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a365d;
+            color: #f8f9fa;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-section p {
+            color: #cbd5e0;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #4a5568;
+            padding-top: 30px;
+            text-align: center;
+            color: #cbd5e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .category-hero h1 {
+                font-size: 36px;
+            }
+
+            .filter-sort-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                max-width: 300px;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">WildBLOOM</a>
+            <ul class="nav-links">
+                <li><a href="noritake.html">HOME</a></li>
+                <li><a href="#products">ALL PRODUCTS</a></li>
+                <li><a href="nlogggg page.html">BLOGS</a></li>
+                <li><a href="blog page.html">CONTACT</a></li>
+                <li><a href="about page.html">ABOUT</a></li>
+            </ul>
+            <div class="nav-icons">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+        </nav>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <nav class="breadcrumb-nav">
+                <a href="#home">Home</a>
+                <span>/</span>
+                <a href="#products">Products</a>
+                <span>/</span>
+                <span>Mugs</span>
+            </nav>
+        </div>
+    </section>
+
+    <section class="category-hero">
+        <div class="container">
+            <h1>All Products</h1>
+            <p>Discover our carefully curated collection of handcrafted mugs, each piece uniquely designed to bring warmth and character to your daily rituals.</p>
+        </div>
+    </section>
+
+    <section class="filter-sort-bar">
+        <div class="container">
+            <div class="filter-sort-content">
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label for="size-filter">Size:</label>
+                        <select id="size-filter">
+                            <option value="all">All Sizes</option>
+                            <option value="small">Small (8oz)</option>
+                            <option value="medium">Medium (12oz)</option>
+                            <option value="large">Large (16oz)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="color-filter">Color:</label>
+                        <select id="color-filter">
+                            <option value="all">All Colors</option>
+                            <option value="earth">Earth Tones</option>
+                            <option value="blue">Blue</option>
+                            <option value="green">Green</option>
+                            <option value="neutral">Neutral</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label for="sort-filter">Sort by:</label>
+                        <select id="sort-filter">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                    </div>
+                    <div class="results-count">
+                        Showing 8 of 8 products
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-badge">BESTSELLER</div>
+                        <a href="product product page.html"><img src="Screenshot 2025-07-13 110909.png" alt="Checkered Totem Mug" class="product-badge"></a>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Checkered Totem Mug</div>
+                        <div class="product-description">A warm, earthy mug with organic textures inspired by coastal landscapes.</div>
+                        <div class="product-price">$58 Each</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="wishlist-btn">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="IMG_2810 (1).jpg" alt="Fruit Bowl">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Fruit Bowl</div>
+                        <div class="product-description">Rustic charm meets modern elegance in this handcrafted desert-inspired piece.</div>
+                        <div class="product-price">$58 Each</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="wishlist-btn">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-badge">NEW</div>
+                        <img src="WhatsApp Image 2025-07-13 at 10.47.20 AM.jpeg" alt="Alea Plate">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Alea Plate</div>
+                        <div class="product-description">Soft blue hues reminiscent of morning mist and gentle ocean waves.</div>
+                        <div class="product-price">$52 Each</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="wishlist-btn">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"> <a href="plate page.html"><img src="Screenshot 2025-07-13 110726.png" alt="Wave Plate" class="product-badge"></a>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Wave Plate</div>
+                        <div class="product-description">Earthy green tones that bring the tranquility of nature to your table.</div>
+                        <div class="product-price">$55 Each</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="wishlist-btn">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="WhatsApp Image 2025-07-13 at 10.47.21 AM (1).jpeg" alt="Blue & White Abstract Cup">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Blue [&] White Abstract Cup</div>
+                        <div class="product-description">Classic cream finish with subtle texture variations for timeless elegance.</div>
+                        <div class="product-price">$50 Each</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="wishlist-btn">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="New Arrivals.jpg" alt="Terracotta Cup">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Terracotta Cup</div>
+                        <div class="product-description">Rich terracotta tones with handcrafted texture for authentic earthen warmth.</div>
+                        <div class="product-price">$62 Each</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="wishlist-btn">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="Screenshot 2025-07-13 112803.png" alt="Water Jug">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Water Jug</div>
+                        <div class="product-description">Deep blue glazes that capture the essence of ocean depths and waves.</div>
+                        <div class="product-price">$56 Each</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="wishlist-btn">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="Screenshot 2025-07-13 113455.png" alt="Shell Dish">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Shell Dish</div>
+                        <div class="product-description">Warm gradient tones that mirror the beauty of early morning light.</div>
+                        <div class="product-price">$60 Each</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="wishlist-btn">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                
+               
+        [</div>]
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+               
+                </div>
+                <div class="footer-section">
+                    <h3>About Company</h3>
+                    <ul>
+                        <li><a href="#story">Our Story</a></li>
+                        <li><a href="#collaborators">Collaborators</a></li>
+                        <li><a href="#resellers">Resellers</a></li>
+                        <li><a href="#blogs">Blogs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#sales">Sales</a></li>
+                        <li><a href="#new-collection">New Collection</a></li>
+                        <li><a href="#all-collection">All Collection</a></li>
+                        <li><a href="#gifting">Gifting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="#track">Track Order</a></li>
+                        <li><a href="#refund">Refund [&] Replacement</a></li>
+                        <li><a href="#return">Return Form</a></li>
+                        <li><a href="#faqs">FAQs</a></li>
+                        <li><a href="#bulk">Bulk Order</a></li>
+                        <li><a href="#terms">Term And Condition</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="contact-info">
+                        <p>#106, Venkateshwara Estate, Thotadagudadahalli, Nagarihalli, Bangalore - 560 073.</p>
+                        <p>WhatsApp On : +91 88617 83304</p>
+                        <p>Amalficeramics@Gmail.Com</p>
+                        <p>Call Us: +91- 88617 83304</p>
+                        <p>Call Us: +91- 99875 90519</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Amalfiee Ceramic - All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
